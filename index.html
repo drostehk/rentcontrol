@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="main.css">
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="semantic/dist/semantic.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+</head>
+
+
+<body>
+
+<!--Menu-->
+<div id="mainHead">
+	<div id="menu" class="ui inverted segment">
+		<div class="ui inverted secondary pointing menu">
+		  <a href="index.html" class="item">
+		    Rent Control
+		  </a>
+		<!--   <a href="about.html" class="item">
+		    About
+		  </a> -->
+		  <div class="right menu">
+		    <div class="ui dropdown item">
+		    Language <i class="dropdown icon"></i>
+		    <div class="menu">
+		    <a class="item">English</a>
+		    <a class="item">Chinese</a>
+		    </div>
+		    </div>
+		  </div>
+	  </div>
+	</div>
+</div>
+
+<div id="mainForm" class="ui segment raised">
+
+	<!--Location: drop down menu-->
+
+	<h3>Location</h3>
+		<form class="ui dropdown selection">
+			<input type="hidden" id="value" />
+			<div class="default text">Location</div>
+			<i class="icon dropdown"></i>
+			<div class="menu">
+				<div class="item" data-value="hki">
+					Hong Kong Island
+				</div>
+				<div class="item" data-value="kln">
+					Kowloon
+				</div>
+				<div class="item" data-value="nt">
+					New Territories
+				</div>
+			</div>
+		</form>
+
+	<!--Flat Size: slider with scale, output Cat.-->
+
+	<h3>Flat Size</h3>
+	  <div class="ui segment">
+	    <div class="ui range" id="range-3"></div>
+	    <br>
+	    <p>
+	      Category <span id="display-3"></span>
+	    </p>
+	  </div>
+
+  <!--Contract Period: In months, default 24 months-->
+  <h3>Contract Period</h3>
+  <!--Contract Due Date: Date picked, default next month-->
+<h3>Contract Due Date</h3>
+    <div class="ui calendar" id="duedate">
+    <div class="ui input left icon">
+      <i class="calendar icon"></i>
+      <input type="text" placeholder="Contract Due Date">
+    </div>
+  </div>
+
+</div>
+
+<div id="graph" class="ui segment raised">
+ <p>Graph will be shown here.</p>
+</div>
+
+</body>
+</html>
