@@ -2,12 +2,16 @@
 <html>
 <head>
 
-<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="main.css">
 <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <script src="semantic/dist/semantic.min.js"></script>
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 
 
@@ -18,32 +22,35 @@
 	<div id="menu" class="ui inverted segment">
 		<div class="ui inverted secondary pointing menu">
 		  <a href="index.html" class="item">
-		    Rent Control
+		    <h2>Rent Control</h2>
 		  </a>
-		<!--   <a href="about.html" class="item">
-		    About
-		  </a> -->
-		  <div class="right menu">
-		    <div class="ui dropdown item">
+
+<!-- Right menu: Language toggle
+ 		  <div class="right menu">
+		    <div id="lang" class="ui dropdown item">
 		    Language <i class="dropdown icon"></i>
 		    <div class="menu">
 		    <a class="item">English</a>
 		    <a class="item">Chinese</a>
 		    </div>
 		    </div>
-		  </div>
+		  </div> -->
+
 	  </div>
 	</div>
 </div>
 
-<div id="mainForm" class="ui segment raised">
+<div class="ui stackable grid">
+  <div class="six wide column">
+
+  	<div id="mainForm" class="ui form blue segment raised form">
 
 	<!--Location: drop down menu-->
 
 	<h3>Location</h3>
-		<form class="ui dropdown selection">
+		<div class="ui dropdown selection">
 			<input type="hidden" id="value" />
-			<div class="default text">Location</div>
+			<div class="default text">Select Location</div>
 			<i class="icon dropdown"></i>
 			<div class="menu">
 				<div class="item" data-value="hki">
@@ -56,35 +63,66 @@
 					New Territories
 				</div>
 			</div>
-		</form>
+		</div>
 
 	<!--Flat Size: slider with scale, output Cat.-->
 
 	<h3>Flat Size</h3>
-	  <div class="ui segment">
-	    <div class="ui range" id="range-3"></div>
-	    <br>
-	    <p>
-	      Category <span id="display-3"></span>
-	    </p>
+	<div class="ui right labeled input">
+	  <input type="text">
+	  <div class="ui basic label">
+	  m<sup>2</sup>
 	  </div>
+	</div>
 
   <!--Contract Period: In months, default 24 months-->
   <h3>Contract Period</h3>
+	<div class="ui right labeled input">
+	  <input type="text" value="24">
+	  <div class="ui basic label">
+	  months
+	  </div>
+	</div>
+
   <!--Contract Due Date: Date picked, default next month-->
-<h3>Contract Due Date</h3>
-    <div class="ui calendar" id="duedate">
-    <div class="ui input left icon">
+	<h3>Contract Due Date</h3>
+	 <div class="ui input left icon">
       <i class="calendar icon"></i>
-      <input type="text" placeholder="Contract Due Date">
-    </div>
+		<input id="duedate" type="text" name="duedate"/>
+	</div>
+
+  <!--Landlord Rental Increase: int, optional-->
+	<h3>Landlord Rental Increase</h3>
+	<div class="ui right labeled input">
+		<input type="text">
+		<div class="ui basic label">
+		%
+		</div>
+	</div>
+
+	<!--Generate Graph button-->
+	<div id="genGraph">
+	<button class="fluid ui blue button" type="submit">Generate graph</button>
+	</div>
+
+	</div>
   </div>
 
+  <div class="ten wide column">
+  	
+	<!--Graph Container-->
+	<div id="graphContainer" class="ui piled segment">
+	 <p>Graph will be shown here.</p>
+
+	 <!--Generate Email button-->
+	 	<button class="ui fluid blue button">
+	 		<i class="icon mail"> </i>
+	 	Share this with your landlord</button>
+	</div>
+
+  </div>
 </div>
 
-<div id="graph" class="ui segment raised">
- <p>Graph will be shown here.</p>
-</div>
 
 </body>
 </html>

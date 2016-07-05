@@ -12,10 +12,10 @@ body{
 	margin: 0 auto;
 }
 
-#mainForm{
+#mainForm, #graphContainer{
 	margin: 20px 20px 0px 20px;
 }
 
-#graph{
-	margin: 20px 20px 0px 20px;
+#genGraph{
+	margin-top: 15px;
 }
