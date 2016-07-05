@@ -825,6 +825,31 @@ $.fn.form = function(parameters) {
               fieldValid  = true,
               fieldErrors = []
             ;
+            if(field.optional && $.trim($field.val()) == ""){
+                module.debug("Field is optional and empty. Skipping", field.identifier);
+                return true;
+            }
+            if(field.rules !== undefined) {
+                $.each(field.rules, function(index, rule) {
+                    if( module.has.field(field.identifier) && !( module.validate.rule(field, rule) ) ) {
+                        module.debug('Field is invalid', field.identifier, rule.type);
+                        fieldErrors.push(rule.prompt);
+                        fieldValid = false;
+                    }
+                });
+            }
+            if(fieldValid) {
+                module.remove.prompt(field, fieldErrors);
+                $.proxy(settings.onValid, $field)();
+            }
+            else {
+                formErrors = formErrors.concat(fieldErrors);
+                module.add.prompt(field.identifier, fieldErrors);
+                $.proxy(settings.onInvalid, $field)(fieldErrors);
+                return false;
+            }
+            return true;
+
             if(!field.identifier) {
               module.debug('Using field name as identifier', identifier);
               field.identifier = identifier;

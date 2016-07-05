@@ -18,4 +18,38 @@ $(document).ready(function() {
         showDropdowns: true
     });
 
+    //Form validation
+    $('#mainForm')
+    	.form({
+    		on: 'blur',
+    		fields: {
+    			integer: {
+    				identifier	: 'integer',
+    				optional: true,
+    				rules: [
+						{
+							type	: 'integer[1..100]',
+							prompt	: 'Please enter an integer value'
+						}
+    				]
+    			}
+    		}
+    	});
+
 });
+
+/*    var cat;
+    if (document.getElementById("flatsize").value < 40) {
+    	cat = "A";
+    	document.getElementById("flatcat").value = cat;
+    } else if (document.getElementById("flatsize").value >= 40 || document.getElementById("flatsize").value <= 69.9) {
+    	cat = "B" ;
+    } else if (document.getElementById("flatsize").value >= 70 || document.getElementById("flatsize").value <= 99.9) {
+    	cat ="C";
+    } else if (document.getElementById("flatsize").value >= 100 || document.getElementById("flatsize").value <= 159.9) {
+    	cat = "D";
+    } else {
+    	cat = "E";
+    }
+    
+    document.getElementById("flatcat").value = cat;*/

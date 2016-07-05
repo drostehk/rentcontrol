@@ -43,13 +43,13 @@
 <div class="ui stackable grid">
   <div class="six wide column">
 
-  	<div id="mainForm" class="ui form blue segment raised form">
+  	<form id="mainForm" class="ui form blue segment raised form">
 
 	<!--Location: drop down menu-->
-
-	<h3>Location</h3>
-		<div class="ui dropdown selection">
-			<input type="hidden" id="value" />
+	<div class="required field">
+	<label>Location</label>
+		<div class="ui selection dropdown">
+			<input type="hidden" id="location" />
 			<div class="default text">Select Location</div>
 			<i class="icon dropdown"></i>
 			<div class="menu">
@@ -64,48 +64,66 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="two fields">
 	<!--Flat Size: slider with scale, output Cat.-->
+		<div class="field">
+			<label>Flat Size</label>
+			<div class="ui right labeled input">
+			  <input type="text" id="flatsize" value="40">
+			  <div class="ui basic label">
+			  m<sup>2</sup>
+			  </div>
+			</div>
+		</div>
 
-	<h3>Flat Size</h3>
-	<div class="ui right labeled input">
-	  <input type="text">
-	  <div class="ui basic label">
-	  m<sup>2</sup>
-	  </div>
+	<!--Category of flat, generated from Flat Size input; read-only-->
+		<div class="field">
+			<label>Flat Category</label>
+			<input id="flatcat" readonly="" type="text" value="B">
+		</div>
+
 	</div>
 
   <!--Contract Period: In months, default 24 months-->
-  <h3>Contract Period</h3>
+  <div class="required field">
+  <label>Contract Period</label>
 	<div class="ui right labeled input">
 	  <input type="text" value="24">
 	  <div class="ui basic label">
 	  months
 	  </div>
 	</div>
+	</div>
 
   <!--Contract Due Date: Date picked, default next month-->
-	<h3>Contract Due Date</h3>
+	<div class="required field">
+	<label>Contract Due Date</label>
 	 <div class="ui input left icon">
       <i class="calendar icon"></i>
 		<input id="duedate" type="text" name="duedate"/>
 	</div>
+	</div>
 
   <!--Landlord Rental Increase: int, optional-->
-	<h3>Landlord Rental Increase</h3>
-	<div class="ui right labeled input">
-		<input type="text">
-		<div class="ui basic label">
-		%
+	<div class="field">
+		<label>Landlord Rental Increase</label>
+		<div class="ui right labeled input">
+			<input name="integer" type="text">
+			<div class="ui basic label">
+			%
+			</div>
 		</div>
 	</div>
 
-	<!--Generate Graph button-->
-	<div id="genGraph">
-	<button class="fluid ui blue button" type="submit">Generate graph</button>
+	<!--Generate Graph /Submit button-->
+	<div id="genGraph" class="fluid ui blue submit button">Generate graph
 	</div>
 
-	</div>
+	<div class="ui error message"></div>
+
+	</form>
   </div>
 
   <div class="ten wide column">
