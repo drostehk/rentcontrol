@@ -49,8 +49,8 @@
 	<div class="required field">
 	<label>Location</label>
 		<div class="ui selection dropdown">
-			<input type="hidden" id="location" />
-			<div class="default text">Select Location</div>
+			<input type="hidden" id="loc" name="loc"/>
+			<div class="default text"></div>
 			<i class="icon dropdown"></i>
 			<div class="menu">
 				<div class="item" data-value="hki">
@@ -81,7 +81,7 @@
 	<!--Category of flat, generated from Flat Size input; read-only-->
 		<div class="field">
 			<label>Flat Category</label>
-			<input id="flatcat" readonly="" type="text" value="B">
+			<input id="flatcat" readonly="" type="text" name="flatcat" value="B">
 		</div>
 
 	</div>
@@ -90,7 +90,7 @@
   <div class="required field">
   <label>Contract Period</label>
 	<div class="ui right labeled input">
-	  <input type="text" value="24">
+	  <input name="contractperiod" type="text" value="24">
 	  <div class="ui basic label">
 	  months
 	  </div>
@@ -110,7 +110,7 @@
 	<div class="field">
 		<label>Landlord Rental Increase</label>
 		<div class="ui right labeled input">
-			<input name="integer" type="text">
+			<input name="rentincrease" type="text">
 			<div class="ui basic label">
 			%
 			</div>
@@ -133,9 +133,9 @@
 	 <p>Graph will be shown here.</p>
 
 	 <!--Generate Email button-->
-	 	<button class="ui fluid blue button">
+	 	<a href="mailto:?subject=Data never lies!&Body=Dear Landlord,"><button class="ui fluid blue button"> <!--Need to generate JPG and attach it in email-->
 	 		<i class="icon mail"> </i>
-	 	Share this with your landlord</button>
+	 	Share this with your landlord</button></a>
 	</div>
 
   </div>

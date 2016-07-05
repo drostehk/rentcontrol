@@ -1,4 +1,5 @@
 $(function() {
+	$('.dropdown').dropdown('set selected', 'Hong Kong Island');
 	$('.dropdown').dropdown({ onChange: function(value){console.log(value);}});
 });
 
