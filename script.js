@@ -69,7 +69,7 @@ $(document).ready(function() {
     GRAPH = document.getElementById('graph');
 
     function makeplot() {
-        Plotly.d3.csv("his_data_3csv.csv", function(data){ processData(data) });
+        Plotly.d3.csv("https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv", function(data){ processData(data) });
     };
 
     function processData(allRows) {
