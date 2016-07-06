@@ -1,10 +1,11 @@
-$(function() {
-	$('.dropdown').dropdown('set selected', 'Hong Kong Island');
-	$('.dropdown').dropdown({ onChange: function(value){console.log(value);}});
-});
+var ilocation, iclass, iperiod, iduedate, iincrease;
 
 $(document).ready(function() {
 
+    //Location
+    $('.dropdown').dropdown('set selected', 'Hong Kong Island');
+
+    //Due Date datepicker
 	var now = new Date();
 	if (now.getMonth() == 12) {
 	    var current = new Date(now.getFullYear() + 1, 0, 1);
@@ -17,9 +18,28 @@ $(document).ready(function() {
 	$('input[name="duedate"]').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true
+       });
+
+    //Flat Size
+    $('#flatsize').on('change keydown paste input', function() {
+        var size = parseFloat(document.getElementById("flatsize").value);
+        if(size < 40) {
+            document.getElementById("class").value = "A";
+        } else if (size >= 40 && size < 70) {
+            document.getElementById("class").value = "B";
+        } else if (size >= 70 && size < 100) {
+            document.getElementById("class").value = "C";
+        } else if (size >= 100 && size < 160) {
+            document.getElementById("class").value = "D";
+        } else if (size >= 160) {
+            document.getElementById("class").value = "E";
+        } else {
+            document.getElementById("class").value = "B";
+        }
     });
 
-    //Form validation
+
+    //Rental Increase form validation (?)
     $('#mainForm')
     	.form({
     		on: 'blur',
@@ -37,20 +57,70 @@ $(document).ready(function() {
     		}
     	});
 
-});
+    document.getElementById("genGraph").onclick = function() {makeGraph();};
 
-/*    var cat;
-    if (document.getElementById("flatsize").value < 40) {
-    	cat = "A";
-    	document.getElementById("flatcat").value = cat;
-    } else if (document.getElementById("flatsize").value >= 40 || document.getElementById("flatsize").value <= 69.9) {
-    	cat = "B" ;
-    } else if (document.getElementById("flatsize").value >= 70 || document.getElementById("flatsize").value <= 99.9) {
-    	cat ="C";
-    } else if (document.getElementById("flatsize").value >= 100 || document.getElementById("flatsize").value <= 159.9) {
-    	cat = "D";
-    } else {
-    	cat = "E";
-    }
-    
-    document.getElementById("flatcat").value = cat;*/
+    function makeGraph() {
+
+    ilocation = $('#loc').val();
+    iclass = $('#class').val();
+    iperiod = $('#period').val();
+    iduedate = $('#duedate').val();
+
+    GRAPH = document.getElementById('graph');
+
+    function makeplot() {
+        Plotly.d3.csv("/his_data_3csv.csv", function(data){ processData(data) });
+    };
+
+    var trace1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 15, 13, 17],
+      fill: 'tonexty',
+      mode: 'lines',
+      line: {
+        color: 'rgb(255, 170, 0)',
+        width: 1
+      }
+    };
+
+    var data = [ trace1 ];
+
+    var layout = {
+        title: 'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
+        xaxis: {
+            title: 'Date'
+        },
+        yaxis: {
+            title: 'Private Domestic Rental Index (Base Year = 1999)'
+        }
+    };
+
+    Plotly.newPlot(GRAPH,data,layout);
+
+    // function processData(allRows) {
+    //     console.log(allRows);
+    //     var x = [], y = [], standard_deviation = [];
+
+    //     for (var i=0; i<allRows.length; i++) {
+    //             row = allRows[i];
+    //             x.push( row['Month'] );
+    //             y.push( row['B'] );
+    //         }
+    //         console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
+    //         makePlotly( x, y, standard_deviation );
+    //     }
+
+    //     function makePlotly( x, y, standard_deviation ){
+    //         var traces = [{
+    //             x: x, 
+    //             y: y
+    //         }];
+
+    //         Plotly.newPlot(GRAPH, traces, 
+    //             {title: 'Plotting CSV data from AJAX call'});
+    //     };
+    //       makeplot();
+
+    }; //makegraph function
+
+});

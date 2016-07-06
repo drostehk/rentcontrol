@@ -8,6 +8,8 @@
 <script src="semantic/dist/semantic.min.js"></script>
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
@@ -53,13 +55,13 @@
 			<div class="default text"></div>
 			<i class="icon dropdown"></i>
 			<div class="menu">
-				<div class="item" data-value="hki">
+				<div class="item" data-value="Hong Kong Island">
 					Hong Kong Island
 				</div>
-				<div class="item" data-value="kln">
+				<div class="item" data-value="Kowloon">
 					Kowloon
 				</div>
-				<div class="item" data-value="nt">
+				<div class="item" data-value="New Territories">
 					New Territories
 				</div>
 			</div>
@@ -67,7 +69,7 @@
 	</div>
 
 	<div class="two fields">
-	<!--Flat Size: slider with scale, output Cat.-->
+	<!--Flat Size-->
 		<div class="field">
 			<label>Flat Size</label>
 			<div class="ui right labeled input">
@@ -81,7 +83,7 @@
 	<!--Category of flat, generated from Flat Size input; read-only-->
 		<div class="field">
 			<label>Flat Category</label>
-			<input id="flatcat" readonly="" type="text" name="flatcat" value="B">
+			<input id="class" readonly="" type="text" name="class" value="B">
 		</div>
 
 	</div>
@@ -90,7 +92,7 @@
   <div class="required field">
   <label>Contract Period</label>
 	<div class="ui right labeled input">
-	  <input name="contractperiod" type="text" value="24">
+	  <input id="period" name="contractperiod" type="text" value="24">
 	  <div class="ui basic label">
 	  months
 	  </div>
@@ -118,8 +120,8 @@
 	</div>
 
 	<!--Generate Graph /Submit button-->
-	<div id="genGraph" class="fluid ui blue submit button">Generate graph
-	</div>
+	<button id="genGraph" class="fluid ui blue button" type='button'>Generate graph
+	</button>
 
 	<div class="ui error message"></div>
 
@@ -130,7 +132,7 @@
   	
 	<!--Graph Container-->
 	<div id="graphContainer" class="ui piled segment">
-	 <p>Graph will be shown here.</p>
+	 <div id="graph"></div>
 
 	 <!--Generate Email button-->
 	 	<a href="mailto:?subject=Data never lies!&Body=Dear Landlord,"><button class="ui fluid blue button"> <!--Need to generate JPG and attach it in email-->
