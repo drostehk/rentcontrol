@@ -69,23 +69,22 @@ $(document).ready(function() {
     GRAPH = document.getElementById('graph');
 
     function makeplot() {
-        Plotly.d3.csv("/his_data_3csv.csv", function(data){ processData(data) });
+        Plotly.d3.csv("his_data_3csv.csv", function(data){ processData(data) });
     };
 
-    var trace1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      fill: 'tonexty',
-      mode: 'lines',
-      line: {
-        color: 'rgb(255, 170, 0)',
-        width: 1
-      }
-    };
+    function processData(allRows) {
+        console.log(allRows);
+        var x = [], y= [], standard_deviation = [];
 
-    var data = [ trace1 ];
+        for (var i = 0; i<allRows.length; i++) {
+            row = allRows[i];
+            x.push(row['Month']);
+            y.push(row['B']);
+        }
+        makePlotly(x,y,standard_deviation);
+    }
 
-    var layout = {
+        var layout = {
         title: 'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
         xaxis: {
             title: 'Date'
@@ -95,31 +94,45 @@ $(document).ready(function() {
         }
     };
 
-    Plotly.newPlot(GRAPH,data,layout);
+    function makePlotly(x,y,standard_deviation) {
+        var traces = [{
+            x: x,
+            y: y
+        }];
 
-    // function processData(allRows) {
-    //     console.log(allRows);
-    //     var x = [], y = [], standard_deviation = [];
+        Plotly.newPlot(GRAPH, traces, layout);
+    };
 
-    //     for (var i=0; i<allRows.length; i++) {
-    //             row = allRows[i];
-    //             x.push( row['Month'] );
-    //             y.push( row['B'] );
-    //         }
-    //         console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
-    //         makePlotly( x, y, standard_deviation );
-    //     }
+    makeplot();
 
-    //     function makePlotly( x, y, standard_deviation ){
-    //         var traces = [{
-    //             x: x, 
-    //             y: y
-    //         }];
 
-    //         Plotly.newPlot(GRAPH, traces, 
-    //             {title: 'Plotting CSV data from AJAX call'});
-    //     };
-    //       makeplot();
+
+    //generate sample graph
+
+        // var trace1 = {
+        //   x: [1, 2, 3, 4],
+        //   y: [10, 15, 13, 17],
+        //   fill: 'tonexty',
+        //   mode: 'lines',
+        //   line: {
+        //     color: 'rgb(255, 170, 0)',
+        //     width: 1
+        //   }
+        // };
+
+        // var data = [ trace1 ];
+
+        // var layout = {
+        //     title: 'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
+        //     xaxis: {
+        //         title: 'Date'
+        //     },
+        //     yaxis: {
+        //         title: 'Private Domestic Rental Index (Base Year = 1999)'
+        //     }
+        // };
+
+        // Plotly.newPlot(GRAPH,data,layout);
 
     }; //makegraph function
 
