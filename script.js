@@ -69,23 +69,27 @@ $(document).ready(function() {
     GRAPH = document.getElementById('graph');
 
     function makeplot() {
-        Plotly.d3.csv("https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv", function(data){ processData(data) });
-    };
+        Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv', function(data){ processData(data) });
+    }
 
     function processData(allRows) {
-        console.log(allRows);
-        var x = [], y= [], standard_deviation = [];
+        var x = [], y= [];
 
         for (var i = 0; i<allRows.length; i++) {
             row = allRows[i];
-            x.push(row['Month']);
+
+            var date = [row['Year'].toString(),row['Month'].toString()];
+            var yym = date.join("-");
+
+            x.push(yym);
             y.push(row['B']);
         }
-        makePlotly(x,y,standard_deviation);
+        makePlotly(x,y);
     }
 
         var layout = {
-        title: 'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
+        title: 'Private Domestic Rental Index (Territory-Wide)',
+        //'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
         xaxis: {
             title: 'Date'
         },
@@ -94,13 +98,14 @@ $(document).ready(function() {
         }
     };
 
-    function makePlotly(x,y,standard_deviation) {
-        var traces = [{
+    function makePlotly(x,y) {
+        var trace1 = [{
             x: x,
-            y: y
+            y: y,
+            fill: 'tonexty'
         }];
 
-        Plotly.newPlot(GRAPH, traces, layout);
+        Plotly.newPlot(GRAPH, trace1, layout);
     };
 
     makeplot();
