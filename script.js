@@ -71,10 +71,7 @@ $(document).ready(function() {
     var sr = new Date(startRange);
     var d = new Date(iduedate);
     var ss = s.getFullYear() + '-' + (s.getMonth() + 1);
-    var srr = sr.getFullYear() + '-' + (sr.getMonth() + 1);
     var dd = d.getFullYear() + '-' + (d.getMonth() + 1);
-
-    console.log(ss, srr, dd);
 
     GRAPH = document.getElementById('graph');
 
@@ -114,6 +111,7 @@ $(document).ready(function() {
         var avg = {
             x: x,
             y: y,
+            name: 'Avg. Rent',
             line: {
                 color: 'rgb(8,74,164)',
                 width: 1
@@ -123,15 +121,42 @@ $(document).ready(function() {
         var actualIncrease = {
             x: [ss,dd],
             y: [sRent,dRent],
-            mode: 'lines',
+            mode: 'lines+markers',
             fill: 'tonexty',
             line: {
                 color: 'rgb(71,230,194)',
-                width: 2
+                width: 1.5
             }
         };
 
-        var data = [avg, actualIncrease];
+        var change, changeamt;
+        if (dRent > sRent) {
+            change = "% increase";
+            changeamt = (dRent - sRent)/sRent*100;
+        } else if (dRent < sRent) {
+            change = "% decrease";
+            changeamt = (dRent - sRent)/sRent*100;
+            changeamt = Math.abs(changeamt);
+        } else {
+            change = "No change";
+            changeamt ="";
+        }
+
+
+
+        var label_change = {
+            x: ['2016-5'],
+            y: [dRent + 10],
+            text: [changeamt.toString() + change],
+            mode:'text',
+            textfont: {
+                family: 'Source Sans Pro',
+                size: 16,
+                color: '#1f77b4'
+            }
+        };
+
+        var data = [avg, actualIncrease,label_change];
 
         var sq = '2';
 
@@ -139,11 +164,44 @@ $(document).ready(function() {
         title: 'Average Private Domestic Rents - '  + ilocation + ' Class ' + iclass,
         xaxis: {
             title: 'Date',
+            range: [Date.UTC(sr.getFullYear(),sr.getMonth(),sr.getDate()),Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())]
         },
         yaxis: {
-            title: '$/m' + sq.sup(2)
+            title: '$/m' + sq.sup(2),
+            range: [350,450]
         },
-        showlegend: false
+        showlegend: false,
+        annotations: [{
+            x: ss,
+            y: sRent,
+            xref: 'x',
+            yref: 'y',
+            text: 'Start Contract',
+            textfont: {
+                family: 'Source Sans Pro',
+                size: 16,
+                color: '#1f77b4'
+            },
+            showarrow: true,
+            arrowhead: 5,
+            ax: 0,
+            ay: -40
+        }, {
+            x: dd,
+            y: dRent,
+            xref: 'x',
+            yref: 'y',
+            text: 'End Contract',
+            textfont: {
+                family: 'Source Sans Pro',
+                size: 16,
+                color: '#1f77b4'
+            },
+            showarrow: true,
+            arrowhead: 5,
+            ax: 0,
+            ay: -40  
+        }]
     };
 
         Plotly.newPlot(GRAPH, data, layout);
