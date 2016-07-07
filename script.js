@@ -65,79 +65,135 @@ $(document).ready(function() {
     iclass = $('#class').val();
     iperiod = $('#period').val();
     iduedate = $('#duedate').val();
+    var startDate = moment(iduedate).subtract(iperiod,'months').calendar().toLocaleString();
+    var startRange = moment(startDate).subtract(6,'months').calendar().toLocaleString();
+    var s = new Date(startDate);
+    var sr = new Date(startRange);
+    var d = new Date(iduedate);
+    var ss = s.getFullYear() + '-' + (s.getMonth() + 1);
+    var srr = sr.getFullYear() + '-' + (sr.getMonth() + 1);
+    var dd = d.getFullYear() + '-' + (d.getMonth() + 1);
+
+    console.log(ss, srr, dd);
 
     GRAPH = document.getElementById('graph');
 
     function makeplot() {
-        Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv', function(data){ processData(data) });
+        Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/avgRent.csv', function(data){ processData(data) });
     }
 
     function processData(allRows) {
-        var x = [], y= [];
+        var x = [], y = [], sRent, dRent;
+        var yy = iclass + '_' + ilocation;
 
         for (var i = 0; i<allRows.length; i++) {
             row = allRows[i];
 
-            var date = [row['Year'].toString(),row['Month'].toString()];
-            var yym = date.join("-");
+            var dateString = [row['year'].toString(),row['month'].toString()];
+            var yymm = dateString.join("-");
+            
+            x.push(yymm);
+            y.push(row[yy]);
 
-            x.push(yym);
-            y.push(row['B']);
+            if (yymm == ss) {
+                sRent = row[yy];
+            }
+
+            if (yymm == dd) {
+                dRent = row[yy];
+            } else {
+                dRent = allRows[208][yy];
+            }
         }
-        makePlotly(x,y);
-    }
 
-        var layout = {
-        title: 'Private Domestic Rental Index (Territory-Wide)',
-        //'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
-        xaxis: {
-            title: 'Date'
-        },
-        yaxis: {
-            title: 'Private Domestic Rental Index (Base Year = 1999)'
-        }
-    };
+        makePlotly(x,y,sRent,dRent);
 
-    function makePlotly(x,y) {
-        var trace1 = [{
+    }   
+
+    function makePlotly(x,y,sRent,dRent) {
+        var avg = {
             x: x,
             y: y,
-            fill: 'tonexty'
-        }];
+            line: {
+                color: 'rgb(8,74,164)',
+                width: 1
+            }
+        };
 
-        Plotly.newPlot(GRAPH, trace1, layout);
+        var actualIncrease = {
+            x: [ss,dd],
+            y: [sRent,dRent],
+            mode: 'lines',
+            fill: 'tonexty',
+            line: {
+                color: 'rgb(71,230,194)',
+                width: 2
+            }
+        };
+
+        var data = [avg, actualIncrease];
+
+        var sq = '2';
+
+        var layout = {
+        title: 'Average Private Domestic Rents - '  + ilocation + ' Class ' + iclass,
+        xaxis: {
+            title: 'Date',
+        },
+        yaxis: {
+            title: '$/m' + sq.sup(2)
+        },
+        showlegend: false
+    };
+
+        Plotly.newPlot(GRAPH, data, layout);
     };
 
     makeplot();
 
 
+    /*-----Territory-wide indices-----*/
+    // function makeplot() {
+    //     Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv', function(data){ processData(data) });
+    // }
 
-    //generate sample graph
+    // function processData(allRows) {
+    //     var x = [], y= [];
 
-        // var trace1 = {
-        //   x: [1, 2, 3, 4],
-        //   y: [10, 15, 13, 17],
-        //   fill: 'tonexty',
-        //   mode: 'lines',
-        //   line: {
-        //     color: 'rgb(255, 170, 0)',
-        //     width: 1
-        //   }
-        // };
+    //     for (var i = 0; i<allRows.length; i++) {
+    //         row = allRows[i];
 
-        // var data = [ trace1 ];
+    //         var date = [row['Year'].toString(),row['Month'].toString()];
+    //         var yym = date.join("-");
 
-        // var layout = {
-        //     title: 'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
-        //     xaxis: {
-        //         title: 'Date'
-        //     },
-        //     yaxis: {
-        //         title: 'Private Domestic Rental Index (Base Year = 1999)'
-        //     }
-        // };
+    //         x.push(yym);
+    //         y.push(row['B']);
+    //     }
+    //     makePlotly(x,y);
+    // }
 
-        // Plotly.newPlot(GRAPH,data,layout);
+    //     var layout = {
+    //     title: 'Private Domestic Rental Index (Territory-Wide)',
+    //     //'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
+    //     xaxis: {
+    //         title: 'Date'
+    //     },
+    //     yaxis: {
+    //         title: 'Private Domestic Rental Index (Base Year = 1999)'
+    //     }
+    // };
+
+    // function makePlotly(x,y) {
+    //     var trace1 = [{
+    //         x: x,
+    //         y: y,
+    //         fill: 'tonexty'
+    //     }];
+
+    //     Plotly.newPlot(GRAPH, trace1, layout);
+    // };
+
+    // makeplot();
 
     }; //makegraph function
 
