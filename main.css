@@ -4,10 +4,6 @@ body{
 	font-family: "helvetica", arial;
 }
 
-/*#mainHead{
-	margin: 20px 20px 0px 20px;
-}*/
-
 #menu{
 	margin: 0 auto;
 }
@@ -19,12 +15,6 @@ body{
 #genGraph{
 	margin-top: 15px;
 }
-
-/*Centers the graph, but doesn't resize dynamically
-	#graph{
-	margin-left: auto;
-	margin-right: auto;
-}*/
 
 /*Dropdown menu css from bootstrap*/
 .dropdown-menu {
@@ -48,4 +38,11 @@ body{
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.glyphicon-chevron-left:before {
+  content: "<";
+}
+.glyphicon-chevron-right:before {
+  content: ">";
 }

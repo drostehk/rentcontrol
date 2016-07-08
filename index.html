@@ -10,7 +10,6 @@
 <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
@@ -24,7 +23,7 @@
 	<div id="menu" class="ui inverted segment">
 		<div class="ui inverted secondary pointing menu">
 		  <a href="index.html" class="item">
-		    <h2>Rent Control</h2>
+		    <h2>Rent Control - A Public Service by Droste</h2>
 		  </a>
 
 <!-- Right menu: Language toggle
@@ -69,35 +68,30 @@
 	</div>
 
 	<div class="two fields">
+	
 	<!--Flat Size-->
-		<div class="field">
+		<div class="required field">
 			<label>Flat Size</label>
 			<div class="ui right labeled input">
-			  <input type="text" id="flatsize" value="40">
+			  <input type="text" id="flatsize" value="450">
 			  <div class="ui basic label">
-			  m<sup>2</sup>
+			  ft<sup>2</sup>
 			  </div>
 			</div>
 		</div>
 
-	<!--Class of flat, generated from Flat Size input; read-only-->
-		<div class="field">
-			<label>Flat Class</label>
-			<input id="class" readonly="" type="text" name="class" value="B">
+	 <!--Contract Period: In months, default 24 months-->
+	  <div class="required field">
+	  <label>Contract Period</label>
+		<div class="ui right labeled input">
+		  <input id="period" name="contractperiod" type="text" value="24">
+		  <div class="ui basic label">months</div>
+		</div>
 		</div>
 
 	</div>
 
-  <!--Contract Period: In months, default 24 months-->
-  <div class="required field">
-  <label>Contract Period</label>
-	<div class="ui right labeled input">
-	  <input id="period" name="contractperiod" type="text" value="24">
-	  <div class="ui basic label">
-	  months
-	  </div>
-	</div>
-	</div>
+<!-- https://web-design-weekly.com/2014/11/18/viewport-units-vw-vh-vmin-vmax/ -->
 
   <!--Contract Due Date: Date picked, default next month-->
 	<div class="required field">
@@ -112,10 +106,8 @@
 	<div class="field">
 		<label>Landlord Rental Increase</label>
 		<div class="ui right labeled input">
-			<input name="rentincrease" type="text">
-			<div class="ui basic label">
-			%
-			</div>
+			<input id="rentIncrease" name="rentincrease" type="text">
+			<div class="ui basic label">%</div>
 		</div>
 	</div>
 
@@ -143,6 +135,6 @@
   </div>
 </div>
 
-
+<!-- <img id="jpg-export"></img>  -->
 </body>
 </html>
