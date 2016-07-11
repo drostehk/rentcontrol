@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
 
-<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-<link rel="stylesheet" type="text/css" href="main.css">
+<link rel="stylesheet" type="text/css" href="../semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="../main.css">
 <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-<script src="semantic/dist/semantic.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
+<script src="../semantic/dist/semantic.min.js"></script>
+<script type="text/javascript" src="../cn/script.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
 </head>
 
 
@@ -20,23 +22,18 @@
 
 <!--Menu-->
 <div id="mainHead">
-	<div id="menu" class="ui inverted segment">
-		<div class="ui inverted secondary pointing menu">
-		  <a href="index.html" class="item">
-		    <h2>Rent Control - A Public Service by Droste</h2>
-		  </a>
-
-<!-- Right menu: Language toggle
- 		  <div class="right menu">
-		    <div id="lang" class="ui dropdown item">
-		    Language <i class="dropdown icon"></i>
-		    <div class="menu">
-		    <a class="item">English</a>
-		    <a class="item">Chinese</a>
-		    </div>
-		    </div>
-		  </div> -->
-
+	<div id="menu" class="ui inverted large menu">
+	  <a class="active item">
+	    Rent Control - A Public Service by Droste
+	  </a>
+	  <div class="right menu">
+	    <div class="ui dropdown item">
+	      語言 <i class="dropdown icon"></i>
+	      <div class="menu">
+	        <a class="item" href="../en/index.html">English</a>
+	        <a class="item" href="../cn/index.html">繁體中文</a>
+	      </div>
+	    </div>
 	  </div>
 	</div>
 </div>
@@ -48,20 +45,20 @@
 
 	<!--Location: drop down menu-->
 	<div class="required field">
-	<label>Location</label>
+	<label>地段</label>
 		<div class="ui selection dropdown">
 			<input type="hidden" id="loc" name="loc"/>
 			<div class="default text"></div>
 			<i class="icon dropdown"></i>
 			<div class="menu">
 				<div class="item" data-value="Hong Kong Island">
-					Hong Kong Island
+					香港島
 				</div>
 				<div class="item" data-value="Kowloon">
-					Kowloon
+					九龍
 				</div>
 				<div class="item" data-value="New Territories">
-					New Territories
+					新界
 				</div>
 			</div>
 		</div>
@@ -71,21 +68,21 @@
 	
 	<!--Flat Size-->
 		<div class="required field">
-			<label>Flat Size</label>
+			<label>單位面積</label>
 			<div class="ui right labeled input">
 			  <input type="text" id="flatsize" value="450">
 			  <div class="ui basic label">
-			  ft<sup>2</sup>
+			  平方呎
 			  </div>
 			</div>
 		</div>
 
 	 <!--Contract Period: In months, default 24 months-->
 	  <div class="required field">
-	  <label>Contract Period</label>
+	  <label>租約爲期</label>
 		<div class="ui right labeled input">
 		  <input id="period" name="contractperiod" type="text" value="24">
-		  <div class="ui basic label">months</div>
+		  <div class="ui basic label">個月</div>
 		</div>
 		</div>
 
@@ -95,7 +92,7 @@
 
   <!--Contract Due Date: Date picked, default next month-->
 	<div class="required field">
-	<label>Contract Due Date</label>
+	<label>租約到期日</label>
 	 <div class="ui input left icon">
       <i class="calendar icon"></i>
 		<input id="duedate" type="text" name="duedate"/>
@@ -104,15 +101,15 @@
 
   <!--Landlord Rental Increase: int, optional-->
 	<div class="field">
-		<label>Landlord Rental Increase</label>
+		<label>房東建議租金調整</label>
 		<div class="ui right labeled input">
-			<input id="rentIncrease" name="rentincrease" type="text">
+			<input id="rentIncrease" name="rentIncrease" type="text">
 			<div class="ui basic label">%</div>
 		</div>
 	</div>
 
 	<!--Generate Graph /Submit button-->
-	<button id="genGraph" class="fluid ui blue button" type='button'>Generate graph
+	<button id="genGraph" class="fluid ui blue button" type='button'>建立圖表
 	</button>
 
 	<div class="ui error message"></div>
@@ -138,3 +135,9 @@
 <!-- <img id="jpg-export"></img>  -->
 </body>
 </html>
+
+<!--
+Dear Landlord,
+
+
+-->

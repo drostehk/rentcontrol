@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<link rel="stylesheet" type="text/css" href="../semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="../main.css">
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="../semantic/dist/semantic.min.js"></script>
+<script type="text/javascript" src="../en/script.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<!-- Include Range Slider -->
+<script type="text/javascript" src="../range/range.js"></script>
+<link rel="stylesheet" type="text/css" href="../range/range.css">
+</head>
+
+
+<body>
+
+<!--Menu-->
+<div id="mainHead">
+	<div id="menu" class="ui inverted large menu">
+	  <a class="active item">
+	    Rent Control - A Public Service by Droste
+	  </a>
+	  <div class="right menu">
+	    <div class="ui dropdown item">
+	      Language <i class="dropdown icon"></i>
+	      <div class="menu">
+	        <a class="item" href="../en/index.html">English</a>
+	        <a class="item" href="../cn/index.html">繁體中文</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<div class="ui stackable grid">
+  <div class="six wide column">
+
+  	<form id="mainForm" class="ui form blue segment raised form">
+
+	<!--Location: drop down menu-->
+	<div class="required field">
+	<label>Location</label>
+		<div class="ui selection dropdown">
+			<input type="hidden" id="loc" name="loc"/>
+			<div class="default text"></div>
+			<i class="icon dropdown"></i>
+			<div class="menu">
+				<div class="item" data-value="Hong Kong Island">
+					Hong Kong Island
+				</div>
+				<div class="item" data-value="Kowloon">
+					Kowloon
+				</div>
+				<div class="item" data-value="New Territories">
+					New Territories
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="two fields">
+	
+	<!--Flat Size-->
+
+		<div class="required field">
+			<label>Flat Size</label>
+			<div class="ui right labeled input">
+			  <input type="text" id="flatsize" value="450">
+			  <div class="ui basic label">
+			  ft<sup>2</sup>
+			  </div>
+			</div>
+<!-- 		<div class="ui segment">
+			<div class="ui blue range" id="slider"></div>
+			<br>
+			<p><span id="sliderDisplay"></span> ft<sup>2</sup></p>
+ 			<div class="ui input">
+				<input type="text" id="input-4" value="450">
+			</div>
+		</div> -->
+		</div>
+
+	 <!--Contract Period: In months, default 24 months-->
+	  <div class="required field">
+	  <label>Contract Period</label>
+		<div class="ui right labeled input">
+		  <input id="period" name="contractperiod" type="text" value="24">
+		  <div class="ui basic label">months</div>
+		</div>
+		</div>
+
+	</div>
+
+<!-- https://web-design-weekly.com/2014/11/18/viewport-units-vw-vh-vmin-vmax/ -->
+
+  <!--Contract Due Date: Date picked, default next month-->
+	<div class="required field">
+	<label>Contract Due Date</label>
+	 <div class="ui input left icon">
+      <i class="calendar icon"></i>
+		<input id="duedate" type="text" name="duedate"/>
+	</div>
+	</div>
+
+  <!--Landlord Rental Increase: int, optional-->
+	<div class="field">
+		<label>Landlord Rental Increase</label>
+		<div class="ui right labeled input">
+			<input id="rentIncrease" name="rentIncrease" type="text">
+			<div class="ui basic label">%</div>
+		</div>
+	</div>
+
+	<!--Generate Graph /Submit button-->
+	<button id="genGraph" class="fluid ui blue button" type='button'>Generate graph
+	</button>
+
+	<div class="ui error message"></div>
+
+	</form>
+  </div>
+
+  <div class="ten wide column">
+  	
+	<!--Graph Container-->
+	<div id="graphContainer" class="ui piled segment">
+	 <div id="graph"></div>
+
+	 <!--Generate Email button-->
+	 	<a href="mailto:?subject=Data never lies!&Body=Dear Landlord,"><button class="ui fluid blue button"> <!--Need to generate JPG and attach it in email-->
+	 		<i class="icon mail"> </i>
+	 	Share this with your landlord</button></a>
+	</div>
+
+  </div>
+</div>
+
+<!-- <img id="jpg-export"></img>  -->
+</body>
+</html>
+
+
+<!--
+Dear Landlord,
+
+
+-->

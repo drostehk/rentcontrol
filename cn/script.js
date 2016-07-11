@@ -21,23 +21,23 @@ $(document).ready(function() {
         showDropdowns: true
        });
 
-    //Rental Increase form validation (?)
+    //Rental Increase form validation
     $('#mainForm')
-    	.form({
-    		on: 'blur',
-    		fields: {
-    			integer: {
-    				identifier	: 'integer',
-    				optional: true,
-    				rules: [
-						{
-							type	: 'integer[1..100]',
-							prompt	: 'Please enter an integer value'
-						}
-    				]
-    			}
-    		}
-    	});
+        .form({
+            on: 'blur',
+            fields: {
+                rentIncrease: {
+                    identifier  : 'rentIncrease',
+                    optional: true,
+                    rules: [
+                        {
+                            type    : 'integer[1..100]',
+                            prompt  : '請輸入一個整數'
+                        }
+                    ]
+                }
+            }
+        });
 
     //Generate plotly.js graph
     makeGraph();
@@ -56,7 +56,6 @@ $(document).ready(function() {
     var srr = sr.getFullYear() + '-' + (sr.getMonth() + 1);
     var ss = s.getFullYear() + '-' + (s.getMonth() + 1);
     var dd = d.getFullYear() + '-' + (d.getMonth() + 1);
-
 
     GRAPH = document.getElementById('graph');
 
@@ -84,6 +83,14 @@ $(document).ready(function() {
         };
 
         var yy = iclass + '_' + ilocation;
+
+        if ($('#loc').val() == "Hong Kong Island") {
+            ilocation = '香港島';
+        } else if ($('#loc').val() == "Kowloon") {
+            ilocation = '九龍';
+        } else if ($('#loc').val() == "New Territories") {
+            ilocation = '新界';
+        }
 
         function findI() {
             for (var i = 0; i < allRows.length; i++) {
@@ -136,7 +143,7 @@ $(document).ready(function() {
         var avg = {
             x: x,
             y: y,
-            name: 'Rent',
+            name: '租金',
             line: {
                 color: 'rgb(78,81,201)',
                 width: 1
@@ -146,7 +153,7 @@ $(document).ready(function() {
         var actualChange = {
             x: [ss,dd],
             y: [sRent,dRent],
-            name: 'Actual Change',
+            name: '實際變更',
             mode: 'lines+markers',
             fill: 'tonexty',
             line: {
@@ -159,7 +166,7 @@ $(document).ready(function() {
         var proposedIncrease = {
             x: [ss,dd],
             y: [sRent, pIncrease],
-            name: 'Proposed Increase',
+            name: '建議調整',
             mode: 'lines+markers',
             fill: 'tonexty',
             line: {
@@ -171,7 +178,7 @@ $(document).ready(function() {
         var stable = {
             x: [ss,dd],
             y: [sRent,sRent],
-            name: 'Original',
+            name: '原有租金',
             mode: 'lines+mrkers',
             fill: 'tonexty',
             line: {
@@ -182,22 +189,21 @@ $(document).ready(function() {
 
         var change, changeamt;
         if (dRent > sRent) {
-            change = "% increase";
             changeamt = (dRent - sRent)/sRent*100;
             changeamt = changeamt.toFixed(2);
+            changeamt = '實際上升 ' + changeamt.toString() + '%';
         } else if (dRent < sRent) {
-            change = "% decrease";
             changeamt = (dRent - sRent)/sRent*100;
             changeamt = Math.abs(changeamt).toFixed(2);
+            changeamt = '實際下跌 ' + changeamt.toString() + '%';
         } else {
-            change = "No change";
-            changeamt ="";
+            changeamt ="沒有變更";
         }
         dRent = parseFloat(dRent);
         var label_change = {
             x: [Date.UTC(d.getFullYear(),d.getMonth()-3,1)],
             y: [Math.max.apply(Math, y) - 2],
-            text: [changeamt.toString() + change],
+            text: [changeamt.toString()],
             mode:'text',
             textfont: {
                 family: 'Source Sans Pro',
@@ -206,11 +212,10 @@ $(document).ready(function() {
             }
         };
 
-        //console.log(Math.min.apply(Math,y), Math.max.apply(Math,y))
         var label_changeIncrease = {
-            x: [Date.UTC(d.getFullYear(),d.getMonth()-3,1),Date.UTC(d.getFullYear(),d.getMonth()-3,1)],
+            x: [Date.UTC(d.getFullYear(),d.getMonth()-4,25),Date.UTC(d.getFullYear(),d.getMonth()-4,25)],
             y: [parseFloat(pIncrease) + 0.5 ,Math.min.apply(Math, y)+0.5],
-            text: ['Proposed ' + iincrease + '% increase', 'Actual ' + changeamt.toString() + change],
+            text: ['建議增加 ' + iincrease + '%', changeamt],
             mode:'text',
             textfont: {
                 family: 'Source Sans Pro',
@@ -228,13 +233,13 @@ $(document).ready(function() {
 
         var sq = '2';
         var layout = {
-        title: 'Average Private Domestic Rents - '  + ilocation + ' Class ' + iclass,
+        title: '私人住宅平均租金 - ' + ilocation + ' (類別: ' + iclass + ')',
         xaxis: {
             title: 'Date',
             range: [Date.UTC(sr.getFullYear(),sr.getMonth(),sr.getDate()),Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())]
         },
         yaxis: {
-            title: 'HK$/ft' + sq.sup(2)
+            title: '$/平方呎'
         },
         showlegend: false,
         annotations: [{
@@ -242,7 +247,7 @@ $(document).ready(function() {
             y: sRent,
             xref: 'x',
             yref: 'y',
-            text: 'Start Contract',
+            text: '租約開始',
             textfont: {
                 family: 'Source Sans Pro',
                 size: 15,
@@ -257,7 +262,7 @@ $(document).ready(function() {
             y: dRent,
             xref: 'x',
             yref: 'y',
-            text: 'End Contract',
+            text: '租約結束',
             textfont: {
                 family: 'Source Sans Pro',
                 size: 15,
