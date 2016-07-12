@@ -9,12 +9,15 @@
 <script src="../semantic/dist/semantic.min.js"></script>
 <script type="text/javascript" src="../cn/script.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<!-- Include Date Range Picker -->
+<!-- Date Range Picker -->
 <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
+<!--jquery UI slider -->
+<script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+<script type="text/javascript" src="../jqueryUI_slider/jquery-ui-slider-pips.js"></script>
+<link rel="stylesheet" type="text/css" href="../jqueryUI_slider/jquery-ui-slider-pips.css">
 </head>
 
 
@@ -41,7 +44,8 @@
 <div class="ui stackable grid">
   <div class="six wide column">
 
-  	<form id="mainForm" class="ui form blue segment raised form">
+  	<script type="text/javascript">makeGraph();</script>
+  	<form id="mainForm" class="ui form blue segment raised form" onsubmit="return makeGraph()">
 
 	<!--Location: drop down menu-->
 	<div class="required field">
@@ -64,19 +68,17 @@
 		</div>
 	</div>
 
-	<div class="two fields">
-	
 	<!--Flat Size-->
+
 		<div class="required field">
-			<label>單位面積</label>
-			<div class="ui right labeled input">
-			  <input type="text" id="flatsize" value="450">
-			  <div class="ui basic label">
-			  平方呎
-			  </div>
+			<label>單位面積 (平方呎)</label>
+			<div class="ui segment">
+				<div class="slider"></div>
+				<input type="hidden" id="flatsize" />
 			</div>
 		</div>
 
+	<div class="two fields">
 	 <!--Contract Period: In months, default 24 months-->
 	  <div class="required field">
 	  <label>租約爲期</label>
@@ -85,8 +87,6 @@
 		  <div class="ui basic label">個月</div>
 		</div>
 		</div>
-
-	</div>
 
 <!-- https://web-design-weekly.com/2014/11/18/viewport-units-vw-vh-vmin-vmax/ -->
 
@@ -98,6 +98,8 @@
 		<input id="duedate" type="text" name="duedate"/>
 	</div>
 	</div>
+
+</div>
 
   <!--Landlord Rental Increase: int, optional-->
 	<div class="field">

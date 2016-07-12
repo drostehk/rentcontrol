@@ -6,6 +6,38 @@ $(document).ready(function() {
     //Location drop-down menu
     $('.dropdown').dropdown('set selected', 'Hong Kong Island');
 
+    $('#mainForm').keypress(function(event) { 
+        var keycode = (event.keyCode ? event.keyCode : event.which); 
+        if (keycode == 13) {
+            event.preventDefault();
+            makeGraph();
+        }
+    });
+
+    //Flat Size slider
+
+var cats = ['<431','431-752','753-1075','1076-1722','≥1723']
+
+$('#flatsize').val(1);
+ 
+$(".slider")
+
+    .slider({ 
+        min: 0, 
+        max: cats.length-1, 
+        value: 1,
+        animate: 200
+    })
+                    
+    .slider("pips", {
+        rest: "label",
+        labels: cats
+    })
+                    
+    .on('slidechange', function(e,ui) {
+        $('#flatsize').val(ui.value);      
+    });
+
     //Due Date datepicker
 	var now = new Date();
 	if (now.getMonth() == 12) {
@@ -66,17 +98,19 @@ $(document).ready(function() {
     function processData(allRows) {
         var x = [], y = [], sRent, dRent;
 
-        var size = parseFloat(document.getElementById("flatsize").value);
-        size = size/10.764;
-        if(size < 40) {
+        var chineseMonths = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+
+        var size = $('#flatsize').val();
+
+        if(size == 0) {
             iclass = "A";
-        } else if (size >= 40 && size < 70) {
+        } else if (size == 1) {
             iclass = "B";
-        } else if (size >= 70 && size < 100) {
+        } else if (size == 2) {
             iclass = "C";
-        } else if (size >= 100 && size < 160) {
+        } else if (size == 3) {
             iclass = "D";
-        } else if (size >= 160) {
+        } else if (size == 4) {
             iclass = "E";
         } else {
             iclass = "B";
@@ -96,7 +130,7 @@ $(document).ready(function() {
             for (var i = 0; i < allRows.length; i++) {
                 row = allRows[i];
 
-                var dateString = [row['year'].toString(),row['month'].toString()];
+                var dateString = [row['year'],row['month']];
                 var yymm = dateString.join("-");
 
                 if (yymm == ss) {
@@ -144,6 +178,7 @@ $(document).ready(function() {
             x: x,
             y: y,
             name: '租金',
+            mode: 'lines',
             line: {
                 color: 'rgb(78,81,201)',
                 width: 1
@@ -179,7 +214,7 @@ $(document).ready(function() {
             x: [ss,dd],
             y: [sRent,sRent],
             name: '原有租金',
-            mode: 'lines+mrkers',
+            mode: 'lines+markers',
             fill: 'tonexty',
             line: {
                 color: 'rgb(255,197,30)',
@@ -202,7 +237,7 @@ $(document).ready(function() {
         dRent = parseFloat(dRent);
         var label_change = {
             x: [Date.UTC(d.getFullYear(),d.getMonth()-3,1)],
-            y: [Math.max.apply(Math, y) - 2],
+            y: [Math.max.apply(Math, y) - 1],
             text: [changeamt.toString()],
             mode:'text',
             textfont: {
