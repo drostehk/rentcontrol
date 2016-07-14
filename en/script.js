@@ -1,7 +1,14 @@
 var ilocation, iperiod, iduedate, iincrease;
 var iclass = "B";
+var c = ["A", "B", "C", "D", "E"];
 
 $(document).ready(function() {
+
+    //Email template modal
+    $('#share').click(function() {
+        document.getElementById('location').innerHTML = $('#loc').val();
+        $('.ui.modal').modal('show');
+    });
 
     //Location drop-down menu
     $('.dropdown').dropdown('set selected', 'Hong Kong Island');
@@ -80,11 +87,12 @@ $(".slider")
     iduedate = $('#duedate').val();
     iincrease = $('#rentIncrease').val();
     var startDate = moment(iduedate).subtract(iperiod,'months').calendar().toLocaleString();
+    document.getElementById('sDate').innerHTML = startDate;
     var startRange = moment(startDate).subtract(3,'months').calendar().toLocaleString();
     var s = new Date(startDate);
     var sr = new Date(startRange);
     var d = new Date(iduedate);
-    var srr = sr.getFullYear() + '-' + (sr.getMonth() + 1);
+    //var srr = sr.getFullYear() + '-' + (sr.getMonth() + 1);
     var ss = s.getFullYear() + '-' + (s.getMonth() + 1);
     var dd = d.getFullYear() + '-' + (d.getMonth() + 1);
 
@@ -97,21 +105,8 @@ $(".slider")
     function processData(allRows) {
         var x = [], y = [], sRent, dRent;
 
-        var size = $('#flatsize').val();
-
-        if(size == 0) {
-            iclass = "A";
-        } else if (size == 1) {
-            iclass = "B";
-        } else if (size == 2) {
-            iclass = "C";
-        } else if (size == 3) {
-            iclass = "D";
-        } else if (size == 4) {
-            iclass = "E";
-        } else {
-            iclass = "B";
-        };
+        iclass = c[parseFloat($('#flatsize').val())]
+        document.getElementById('class').innerHTML = iclass;
 
         var yy = iclass + '_' + ilocation;
 
@@ -211,18 +206,20 @@ $(".slider")
             }
         };
 
-        var change, changeamt;
+        var change, changeamt = "";
         if (dRent > sRent) {
             change = "% increase";
-            changeamt = (dRent - sRent)/sRent*100;
-            changeamt = 'Actual ' + changeamt.toFixed(2);
+            changeamt = ((dRent - sRent)/sRent*100).toFixed(2);
+            document.getElementById('change').innerHTML = 'increased by ' + changeamt + '%';
+            changeamt = 'Actual ' + changeamt
         } else if (dRent < sRent) {
             change = "% decrease";
-            changeamt = (dRent - sRent)/sRent*100;
-            changeamt = 'Actual ' + Math.abs(changeamt).toFixed(2);
+            changeamt = Math.abs((dRent - sRent)/sRent*100).toFixed(2);
+            document.getElementById('change').innerHTML = 'decreased by ' + changeamt + '%';
+            changeamt = 'Actual ' + changeamt
         } else {
             change = "No change";
-            changeamt ="";
+            document.getElementById('change').innerHTML = 'not changed';
         }
         dRent = parseFloat(dRent);
         var label_change = {
@@ -308,7 +305,7 @@ $(".slider")
 
         //Export graph as JPG
         .then(function(gd) {
-            Plotly.toImage(gd,{format:'jpeg',height:450,width:653})
+            Plotly.toImage(gd,{format:'jpeg',height:450,width:750})
                 .then(
                     function(url)
                     {
@@ -323,49 +320,51 @@ $(".slider")
 
     makeplot();
 
+    //Fluid and responsive layout 
+    //https://plot.ly/javascript/responsive-fluid-layout/
 
-    /*-----Territory-wide indices-----
-    function makeplot() {
-        Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv', function(data){ processData(data) });
-    }
+    // // -----Territory-wide indices-----
+    // function makeplot() {
+    //     Plotly.d3.csv('https://raw.githubusercontent.com/drostehk/rentcontrol/master/his_data_3csv.csv', function(data){ processData(data) });
+    // }
 
-    function processData(allRows) {
-        var x = [], y= [];
+    // function processData(allRows) {
+    //     var x = [], y= [];
 
-        for (var i = 0; i<allRows.length; i++) {
-            row = allRows[i];
+    //     for (var i = 0; i<allRows.length; i++) {
+    //         row = allRows[i];
 
-            var date = [row['Year'].toString(),row['Month'].toString()];
-            var yym = date.join("-");
+    //         var date = [row['Year'].toString(),row['Month'].toString()];
+    //         var yym = date.join("-");
 
-            x.push(yym);
-            y.push(row['B']);
-        }
-        makePlotly(x,y);
-    }
+    //         x.push(yym);
+    //         y.push(row['B']);
+    //     }
+    //     makePlotly(x,y);
+    // }
 
-        var layout = {
-        title: 'Private Domestic Rental Index (Territory-Wide)',
-        //'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
-        xaxis: {
-            title: 'Date'
-        },
-        yaxis: {
-            title: 'Private Domestic Rental Index (Base Year = 1999)'
-        }
-    };
+    //     var layout = {
+    //     title: 'Private Domestic Rental Index (Territory-Wide)',
+    //     //'Private Domestic Rental Index - Average ' + ilocation + ' Rate for Class ' + iclass,
+    //     xaxis: {
+    //         title: 'Date'
+    //     },
+    //     yaxis: {
+    //         title: 'Private Domestic Rental Index (Base Year = 1999)'
+    //     }
+    // };
 
-    function makePlotly(x,y) {
-        var trace1 = [{
-            x: x,
-            y: y,
-            fill: 'tonexty'
-        }];
+    // function makePlotly(x,y) {
+    //     var trace1 = [{
+    //         x: x,
+    //         y: y,
+    //         fill: 'tonexty'
+    //     }];
 
-        Plotly.newPlot(GRAPH, trace1, layout);
-    };
+    //     Plotly.newPlot(GRAPH, trace1, layout);
+    // };
 
-    makeplot(); */
+    // makeplot(); 
 
     }; //makegraph function
 

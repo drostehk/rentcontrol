@@ -126,20 +126,33 @@
 	 <div id="graph"></div>
 
 	 <!--Generate Email button-->
-	 	<a href="mailto:?subject=Data never lies!&Body=Dear Landlord,"><button class="ui fluid blue button"> <!--Need to generate JPG and attach it in email-->
+	 	<button id="share" class="ui fluid blue button"> <!--Need to generate JPG and attach it in email-->
 	 		<i class="icon mail"> </i>
-	 	Share this with your landlord</button></a>
+	 	Email your landlord</button>
 	</div>
 
   </div>
-</div>
+ </div>
 
-<!-- <img id="jpg-export"></img>  -->
+ <div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Email template
+  </div>
+    <div class="content">
+      <p>To whom it may concern,</p><p>I am writing in regards to the renewal of our lease at [insert your apartment's address].</p>
+      <p>On <span id="sDate"></span>, we moved into a unit in the aforementioned property. Since then, the average rents in <span id="location"></span> have <span id="change"></span> for Class <span id="class"></span> private domestic units.</p>
+    </div>
+  <div class="image content">
+    <div class="image">
+      <img id="jpg-export"></img>
+    </div>
+  </div>
+  <div class="content">
+      <p>Based on the historical government data illustrated in the graph above, a rent hike of 10% seems inconsistent with the recent market conditions and unfair to paying tenants like us with positive rental history.</p>
+      <p>We are paying [current rate] per month in rent currently.  We propose that [your proposed rent increase] would be a more reasonable rent increase to pay for this apartment.</p>
+      <p>We look forward to continuing the conversation and hearing from you shortly. Thank you.</p> Sincerely, <br>[Your name and contact info]
+    </div>
+</div>
 </body>
 </html>
-
-<!--
-Dear Landlord,
-
-
--->

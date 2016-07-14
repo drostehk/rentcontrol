@@ -1,7 +1,14 @@
 var ilocation, iperiod, iduedate, iincrease;
 var iclass = "B";
+var c = ["A", "B", "C", "D", "E"];
 
 $(document).ready(function() {
+
+    //Email template modal
+    $('#share').click(function() {
+        document.getElementById('location').innerHTML = $('#loc').val();
+        $('.ui.modal').modal('show');
+    });
 
     //Location drop-down menu
     $('.dropdown').dropdown('set selected', 'Hong Kong Island');
@@ -81,6 +88,7 @@ $(".slider")
     iduedate = $('#duedate').val();
     iincrease = $('#rentIncrease').val();
     var startDate = moment(iduedate).subtract(iperiod,'months').calendar().toLocaleString();
+    document.getElementById('sDate').innerHTML = startDate;
     var startRange = moment(startDate).subtract(3,'months').calendar().toLocaleString();
     var s = new Date(startDate);
     var sr = new Date(startRange);
@@ -100,21 +108,8 @@ $(".slider")
 
         var chineseMonths = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 
-        var size = $('#flatsize').val();
-
-        if(size == 0) {
-            iclass = "A";
-        } else if (size == 1) {
-            iclass = "B";
-        } else if (size == 2) {
-            iclass = "C";
-        } else if (size == 3) {
-            iclass = "D";
-        } else if (size == 4) {
-            iclass = "E";
-        } else {
-            iclass = "B";
-        };
+        iclass = c[parseFloat($('#flatsize').val())]
+        document.getElementById('class').innerHTML = iclass;
 
         var yy = iclass + '_' + ilocation;
 
@@ -224,15 +219,16 @@ $(".slider")
 
         var change, changeamt;
         if (dRent > sRent) {
-            changeamt = (dRent - sRent)/sRent*100;
-            changeamt = changeamt.toFixed(2);
-            changeamt = '實際上升 ' + changeamt.toString() + '%';
+            changeamt = ((dRent - sRent)/sRent*100).toFixed(2);
+            document.getElementById('change').innerHTML = 'increased by ' + changeamt + '%';
+            changeamt = '實際上升 ' + changeamt + '%';
         } else if (dRent < sRent) {
-            changeamt = (dRent - sRent)/sRent*100;
-            changeamt = Math.abs(changeamt).toFixed(2);
-            changeamt = '實際下跌 ' + changeamt.toString() + '%';
+            changeamt = Math.abs((dRent - sRent)/sRent*100).toFixed(2);
+            document.getElementById('change').innerHTML = 'decreased by ' + changeamt + '%';
+            changeamt = '實際下跌 ' + changeamt + '%';
         } else {
             changeamt ="沒有變更";
+            document.getElementById('change').innerHTML = 'not changed';
         }
         dRent = parseFloat(dRent);
         var label_change = {
