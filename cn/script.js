@@ -1,12 +1,15 @@
 var ilocation, iperiod, iduedate, iincrease;
 var iclass = "B";
 var c = ["A", "B", "C", "D", "E"];
+var chiNum = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', 
+            '十四','十五','十六','十七','十八','十九','二十','二十一','二十二','二十三','二十四',
+            '二十五','二十六','二十七','二十八','二十九','三十','三十一'];
+
 
 $(document).ready(function() {
 
     //Email template modal
     $('#share').click(function() {
-        document.getElementById('location').innerHTML = $('#loc').val();
         $('.ui.modal').modal('show');
     });
 
@@ -54,6 +57,9 @@ $(".slider")
 	}
 
 	document.getElementById("duedate").value = current.toLocaleString();
+    document.getElementById("year").innerHTML = chiNum[(current.getFullYear().toString()[2]) - 1] + chiNum[(current.getFullYear().toString()[3]) - 1];
+    document.getElementById("month").innerHTML = chiNum[current.getMonth() - 1];
+    document.getElementById("day").innerHTML = chiNum[current.getDate() - 1];
 
 	$('input[name="duedate"]').daterangepicker({
         singleDatePicker: true,
@@ -88,7 +94,6 @@ $(".slider")
     iduedate = $('#duedate').val();
     iincrease = $('#rentIncrease').val();
     var startDate = moment(iduedate).subtract(iperiod,'months').calendar().toLocaleString();
-    document.getElementById('sDate').innerHTML = startDate;
     var startRange = moment(startDate).subtract(3,'months').calendar().toLocaleString();
     var s = new Date(startDate);
     var sr = new Date(startRange);
@@ -106,10 +111,7 @@ $(".slider")
     function processData(allRows) {
         var x = [], y = [], sRent, dRent;
 
-        var chineseMonths = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
-
         iclass = c[parseFloat($('#flatsize').val())]
-        document.getElementById('class').innerHTML = iclass;
 
         var yy = iclass + '_' + ilocation;
 
@@ -220,15 +222,15 @@ $(".slider")
         var change, changeamt;
         if (dRent > sRent) {
             changeamt = ((dRent - sRent)/sRent*100).toFixed(2);
-            document.getElementById('change').innerHTML = 'increased by ' + changeamt + '%';
+            document.getElementById('change').innerHTML = '上升' + changeamt + '個百分比';
             changeamt = '實際上升 ' + changeamt + '%';
         } else if (dRent < sRent) {
             changeamt = Math.abs((dRent - sRent)/sRent*100).toFixed(2);
-            document.getElementById('change').innerHTML = 'decreased by ' + changeamt + '%';
-            changeamt = '實際下跌 ' + changeamt + '%';
+            document.getElementById('change').innerHTML = '下降' + changeamt + '個百分比';
+            changeamt = '實際下降 ' + changeamt + '%';
         } else {
             changeamt ="沒有變更";
-            document.getElementById('change').innerHTML = 'not changed';
+            document.getElementById('change').innerHTML = '沒有變更';
         }
         dRent = parseFloat(dRent);
         var label_change = {
