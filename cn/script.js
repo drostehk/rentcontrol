@@ -174,7 +174,7 @@ $(".slider")
         var avg = {
             x: x,
             y: y,
-            name: '租金',
+            name: '市價',
             mode: 'lines',
             line: {
                 color: 'rgb(78,81,201)',
@@ -185,7 +185,7 @@ $(".slider")
         var actualChange = {
             x: [ss,dd],
             y: [sRent,dRent],
-            name: '實際變更',
+            name: '市價',
             mode: 'lines+markers',
             fill: 'tonexty',
             line: {
@@ -198,7 +198,7 @@ $(".slider")
         var proposedIncrease = {
             x: [ss,dd],
             y: [sRent, pIncrease],
-            name: '建議調整',
+            name: '建議整調',
             mode: 'lines+markers',
             fill: 'tonexty',
             line: {
