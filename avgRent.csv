@@ -1,4 +1,4 @@
-﻿year,month,A_Hong Kong Island,A_Kowloon,A_New Territories,B_Hong Kong Island,B_Kowloon,B_New Territories,C_Hong Kong Island,C_Kowloon,C_New Territories,D_Hong Kong Island,D_Kowloon,D_New Territories,E_Hong Kong Island,E_Kowloon,E_New Territories
+year,month,A_Hong Kong Island,A_Kowloon,A_New Territories,B_Hong Kong Island,B_Kowloon,B_New Territories,C_Hong Kong Island,C_Kowloon,C_New Territories,D_Hong Kong Island,D_Kowloon,D_New Territories,E_Hong Kong Island,E_Kowloon,E_New Territories
 1999,1,190,171,133,199,165,118,249,187,150,284,198,185,301,185,191
 1999,2,196,173,133,204,165,114,239,177,144,268,196,173,311,213,152
 1999,3,199,170,133,197,160,117,247,177,142,262,174,186,301,194,190
@@ -208,3 +208,7 @@
 2016,3,398,304,250,354,303,219,391,330,230,416,305,265,441,322,235
 2016,4,393,314,249,363,303,224,393,308,233,421,315,271,415,409,207
 2016,5,391,326,263,370,309,228,406,317,228,393,317,239,421,295,239
+2016,6,419,319,262,375,295,215,385,332,223,410,343,229,436,413,214
+2016,7,418,358,279,379,308,229,384,341,226,412,336,239,432,371,228
+2016,8,430,353,281,379,314,235,403,339,242,422,351,253,426,313,254
+2016,9,431,339,278,376,311,226,399,353,236,417,364,238,432,466,262
