@@ -53,11 +53,14 @@ $(".slider")
 	    var current = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
 	}
 
-	document.getElementById("duedate").value = current.toLocaleString();
+	document.getElementById("duedate").value = current.toLocaleString('en-US');
 
 	$('input[name="duedate"]').daterangepicker({
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        locale: {
+          format: 'MM-DD-YYYY'
+        },
        });
 
     //Rental Increase form validation
@@ -149,7 +152,7 @@ $(".slider")
             if (yymm == dd) {
                 dRent = (row[yy]/10.764).toFixed(2);
             } else {
-                dRent = (allRows[208][yy]/10.764).toFixed(2);
+                dRent = (allRows.slice(-1).pop()[yy]/10.764).toFixed(2);
             }
         }
 
@@ -223,8 +226,8 @@ $(".slider")
         }
         dRent = parseFloat(dRent);
         var label_change = {
-            x: [Date.UTC(d.getFullYear(),d.getMonth()-3,1)],
-            y: [Math.max.apply(Math, y) - 1],
+            x: [Date.UTC(d.getFullYear(),d.getMonth()-2,1)],
+            y: [Math.max.apply(Math, y) - 2],
             text: [changeamt.toString() + change],
             mode:'text',
             textfont: {
