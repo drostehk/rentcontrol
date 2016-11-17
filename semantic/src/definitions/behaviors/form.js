@@ -352,10 +352,13 @@ $.fn.form = function(parameters) {
 
         get: {
           ancillaryValue: function(rule) {
-            if(!rule.type || !module.is.bracketedRule(rule)) {
+            if(!rule.type || (!rule.value && !module.is.bracketedRule(rule))) {
               return false;
             }
-            return rule.type.match(settings.regExp.bracket)[1] + '';
+            return (rule.value !== undefined)
+              ? rule.value
+              : rule.type.match(settings.regExp.bracket)[1] + ''
+            ;
           },
           ruleName: function(rule) {
             if( module.is.bracketedRule(rule) ) {
@@ -825,31 +828,6 @@ $.fn.form = function(parameters) {
               fieldValid  = true,
               fieldErrors = []
             ;
-            if(field.optional && $.trim($field.val()) == ""){
-                module.debug("Field is optional and empty. Skipping", field.identifier);
-                return true;
-            }
-            if(field.rules !== undefined) {
-                $.each(field.rules, function(index, rule) {
-                    if( module.has.field(field.identifier) && !( module.validate.rule(field, rule) ) ) {
-                        module.debug('Field is invalid', field.identifier, rule.type);
-                        fieldErrors.push(rule.prompt);
-                        fieldValid = false;
-                    }
-                });
-            }
-            if(fieldValid) {
-                module.remove.prompt(field, fieldErrors);
-                $.proxy(settings.onValid, $field)();
-            }
-            else {
-                formErrors = formErrors.concat(fieldErrors);
-                module.add.prompt(field.identifier, fieldErrors);
-                $.proxy(settings.onInvalid, $field)(fieldErrors);
-                return false;
-            }
-            return true;
-
             if(!field.identifier) {
               module.debug('Using field name as identifier', identifier);
               field.identifier = identifier;
@@ -1232,6 +1210,9 @@ $.fn.form.settings = {
 
     // matches specified regExp
     regExp: function(value, regExp) {
+      if(regExp instanceof RegExp) {
+        return value.match(regExp);
+      }
       var
         regExpParts = regExp.match($.fn.form.settings.regExp.flags),
         flags
