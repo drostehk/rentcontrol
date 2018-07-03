@@ -125,3 +125,4 @@ nbproject
 *.sublime-project
 *.sublime-workspace
 .build*
+package-lock.json

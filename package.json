@@ -1,0 +1,22 @@
+{
+  "name": "rentcontrol",
+  "version": "1.0.0",
+  "description": "Code behind rentcontrol.droste.hk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drostehk/rentcontrol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drostehk/rentcontrol/issues"
+  },
+  "homepage": "https://github.com/drostehk/rentcontrol#readme",
+  "dependencies": {
+    "semantic-ui": "^2.3.2"
+  }
+}
